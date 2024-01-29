@@ -1,18 +1,30 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Import issues'
+description: 'Create a new Kudos repository and import all of the open issues'
+author: 'Kudos'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  project-name:  
+    description: 'The project name that will be visible on Kudos'
     required: true
-    default: '1000'
+  repo-url:  
+    description: 'The repository from which to import the issues'
+    required: true
+  github-token:  
+    description: 'The GitHub Token'
+    required: true
+  notion-api-key:  
+    description: 'The Notion API key'
+    required: true
+  issues-db-id:  
+    description: 'The issues table ID'
+    required: true
+  repo-list-db-id:  
+    description: 'The repo table ID'
+    required: true
 
-# Define your outputs here.
 outputs:
-  time:
-    description: 'Your output description here'
+  failed_import_links: 
+    description: 'An array of issues urls which did not get imported'
 
 runs:
   using: node20
