@@ -34273,23 +34273,23 @@ async function run() {
       console.log(`Importing ${issues.length} from GitHub into Notion...\n`)
 
       let successful_import_count = 0
-      const failed_import_links = new Set()
+      const failed_import_links = new Map()
       for (const row of notion_objs) {
         const success = await notionInsertRow(notion, row, ISSUES_DB_ID)
         if (success) {
           successful_import_count++
         } else {
-          failed_import_links.add(row['Issue Link'].url)
+          failed_import_links.set(row['Issue Link'].url, row)
         }
         await delay(500)
       }
 
       // retry importing links
-      for (const row of failed_import_links) {
+      for (const [url, row] of failed_import_links) {
         const success = await notionInsertRow(notion, row, ISSUES_DB_ID)
         if (success) {
           successful_import_count++
-          failed_import_links.delete(row['Issue Link'].url)
+          failed_import_links.delete(url)
         }
         await delay(500)
       }
@@ -34297,10 +34297,12 @@ async function run() {
       console.log(
         `Successfully imported ${successful_import_count} of ${issues.length}.`
       )
+      console.log(`Repository id: ${newRepoPageId}`)
 
       if (failed_import_links.size) {
         core.setOutput('failed_import_links', Array.from(failed_import_links))
       }
+      core.setOutput('repository_id', newRepoPageId)
     } catch (error) {
       console.log(error)
       core.setFailed(error.message)

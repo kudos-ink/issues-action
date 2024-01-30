@@ -3,28 +3,30 @@ description: 'Create a new Kudos repository and import all of the open issues'
 author: 'Kudos'
 
 inputs:
-  project-name:  
+  project-name:
     description: 'The project name that will be visible on Kudos'
     required: true
-  repo-url:  
+  repo-url:
     description: 'The repository from which to import the issues'
     required: true
-  github-token:  
+  github-token:
     description: 'The GitHub Token'
     required: true
-  notion-api-key:  
+  notion-api-key:
     description: 'The Notion API key'
     required: true
-  issues-db-id:  
+  issues-db-id:
     description: 'The issues table ID'
     required: true
-  repo-list-db-id:  
+  repo-list-db-id:
     description: 'The repo table ID'
     required: true
 
 outputs:
-  failed_import_links: 
+  failed_import_links:
     description: 'An array of issues urls which did not get imported'
+  repository_id:
+    description: 'repository id'
 
 runs:
   using: node20

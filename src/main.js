@@ -121,10 +121,12 @@ async function run() {
       console.log(
         `Successfully imported ${successful_import_count} of ${issues.length}.`
       )
+      console.log(`Repository id: ${newRepoPageId}`)
 
       if (failed_import_links.size) {
         core.setOutput('failed_import_links', Array.from(failed_import_links))
       }
+      core.setOutput('repository_id', newRepoPageId)
     } catch (error) {
       console.log(error)
       core.setFailed(error.message)
