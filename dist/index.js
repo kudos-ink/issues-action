@@ -34300,7 +34300,10 @@ async function run() {
       console.log(`Repository id: ${newRepoPageId}`)
 
       if (failed_import_links.size) {
-        core.setOutput('failed_import_links', Array.from(failed_import_links))
+        core.setOutput(
+          'failed_import_links',
+          Array.from(failed_import_links.keys())
+        )
       }
       core.setOutput('repository_id', newRepoPageId)
     } catch (error) {
